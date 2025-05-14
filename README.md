@@ -1,25 +1,25 @@
 <div align="center">
-  <h1>E-Commerce Retail Data Analysis</h1>
+  <h1>Retail Data Analysis</h1>
 </div>
 
 
 <div align="center">
-E-Commerce Retail Data Analysis is to understand customer behavior using their point of sales data.
+Retail Data Analysis is to understand customer behavior using their point of sales data.
   
 </div>
 
 
 
 <div align="center">
-  <img src="https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/bbf6a013-42a5-4d4b-821a-1806c45f009d" alt="ecommerce-01">
+  <img src="https://static.vecteezy.com/system/resources/thumbnails/008/150/836/small_2x/women-with-shopping-cart-and-commercial-flat-illustration-vector.jpg" alt="ecommerce-01">
 </div>
 
 
 
 
 ## Tools
-- Database Management System: SQL Server
-- SQL Editor: SQL Server Management Studio (SSMS)
+- Database Management System: PostgreSQL
+- SQL Editor: pgAdmin
 
 
 ## Dataset Description: 
@@ -44,7 +44,7 @@ This dataset is used to store customer demographics and information.
 **Variables:**
 - Prod_cat_code (int): Product category code.
 - Prod_cat (varchar): Product category.
-- Prod_sub_cat_code (int): Product subcategory code.
+- Prod_subcat_code (int): Product subcategory code.
 - Prod_subcat (varchar): Product subcategory.
 
 **Schema:**
@@ -80,6 +80,65 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 
 # Data Preparation and Understanding: 
+## Create tables with required column names, constraints & data types
+**Query:**
+```
+CREATE TABLE transactions (
+transaction_id int PRIMARY KEY,
+cust_id int,
+tran_date DATE,
+prod_subcat_code int,
+prod_cat_code int,
+qty int,
+Rate int,
+tax float,
+total_amt float,
+Store_type varchar
+)
+
+CREATE TABLE prod_cat_info(
+prod_cat_code int ,
+prod_cat varchar,
+prod_subcat_code int ,
+prod_subcat varchar
+
+)
+CREATE TABLE customers(
+customer_id int PRIMARY KEY,
+dob date,
+gender varchar,
+city_code int
+)
+
+ALTER TABLE transactions
+ADD CONSTRAINT fk_customers
+FOREIGN KEY (cust_id)
+REFERENCES customers(customer_id);
+```
+**Methods used:**
+- CREATE TABLE (DDL command) (used to create structure for new table)
+**Result:**
+
+![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/bee1af48-0104-4b36-b0ab-f637a32532e1)
+
+## Import data from CSV to database
+**Query:**
+```
+COPY customers
+FROM 'D:/Project_RetailDataAnalysis/Datasets/customers.csv'
+DELIMITER ','
+CSV HEADER
+
+COPY Transactions
+FROM 'D:/Project_RetailDataAnalysis/Datasets/Transactions.csv'
+DELIMITER ',' 
+CSV HEADER;
+
+COPY prod_cat_info
+FROM 'D:/Project_RetailDataAnalysis/Datasets/prod_cat_info.csv'
+DELIMITER ',' 
+CSV HEADER;
+```
 
 ## 1. What is the total number of rows in each of the 3 tables in the database?
 
@@ -104,7 +163,9 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/bee1af48-0104-4b36-b0ab-f637a32532e1)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Count%20Trans.png)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Count%20Prod.png)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Count%20Cust.png)
 
 
 **Business Solution:**
@@ -131,7 +192,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/06c062ce-5a6b-434a-b22d-4b2706987456)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20total%20number%20of%20transactions%20that%20have%20a%20return.png)
 
 **Business Solution:**
 - This query will display the number of returns which can help to improve product quality, inventory management and customer satisfaction.
@@ -150,7 +211,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 ```
 
 **Methods used:**
-- Functions - DATEDIFF (used to calculate the difference between two dates)
+- Functions - DATE_PART (used to get specific year, month or day from date)
 - Functions - MIN (aggregate) (used to find the minimum values)
 - Functions - MAX (aggregate) (used to find the maximum values)
 
@@ -160,7 +221,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/3ec1ee8e-21b3-4ab1-b3dc-98d9b5177de7)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20time%20range%20of%20the%20transaction%20data%20available%20for%20analysis%20Show%20the%20output%20in%20number%20of%20days%2C%20months%20and%20years%20simultaneously%20in%20different%20columns.png)
 
 **Business Solution:**
 - Here we have the timespan of data in number of days, months, years which can be used for data analysis and documentation purpose.
@@ -185,7 +246,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/e2fd74dd-d870-4ca8-af84-80bd83b8c867)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Which%20product%20category%20does%20the%20sub-category%20%E2%80%9CDIY%E2%80%9D%20belong%20to.png)
 
 **Business Solution:**
 - The Books category has DIY subcategory. Queries like this can be used to find which subcategory belongs to which category.
@@ -215,7 +276,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/d8f55e64-9aa8-4317-83cd-da783fe7635d)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Which%20channel%20is%20most%20frequently%20used%20for%20transactions.png)
 
 **Business Solution:**
 - e-Shop channel is most frequently used by customers for transactions. This can help in planning channel-specific strategies and analysis for enhancing customer experiences etc.
@@ -243,7 +304,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/7c571cd5-de3a-4213-bcc8-03dc0bdacfb0)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20count%20of%20Male%20and%20Female%20customers%20in%20the%20database.png)
 
 **Business Solution:**
 - This data shows the number of male customer and female customers which can be used to plan gender specific strategies, identifying trends.
@@ -261,7 +322,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 ```
 
 **Methods used:**
-- Limiting clause - TOP (used to limit the number of rows returned by a query)
+- Limiting clause - LIMIT (used to limit the number of rows returned by a query)
 - Functions - COUNT (aggregate) (used to count the number of rows)
 - Grouping clause - GROUP BY (used to group rows that have the same values into summary rows)
 - Sorting clause - ORDER BY (used to sort the result set of a query based on one or more columns)
@@ -272,7 +333,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/326debcf-6a2d-4894-af3e-5ed4f31e581a)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/From%20which%20city%20do%20we%20have%20the%20maximum%20number%20of%20customers%20and%20how%20many.png)
 
 **Business Solution:**
 - This data shows the city with city_code 3 has maximum as in 595 customers which can help to plan market broadening in future.
@@ -300,7 +361,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/7afb7a97-ad4b-419c-b550-8bfd395c98e6)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/How%20many%20sub-categories%20are%20there%20under%20the%20Books%20category.png)
 
 **Business Solution:**
 - There are 6 subcategories under the Books category. Queries like this can be used to retrieve subcategory data.
@@ -324,7 +385,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/ce189422-f6d2-432a-9252-960969058b3f)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20maximum%20quantity%20of%20products%20ever%20ordered.png)
 
 **Business Solution:**
 - 5 is the maximum quantity of products ever ordered. Queries like this can be used for to get data on products.
@@ -355,7 +416,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/cf8a3d04-37cd-47be-a55d-a7573ab34de5)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20net%20total%20revenue%20generated%20in%20categories%20Electronics%20and%20Books.png)
 
 **Business Solution:**
 - 10722463.635 is net total revenue generated in Electronics and 12822694.04 in Books which can used to get total revenue generated also considering the returns data. This can help to analysis category specific trends.
@@ -390,7 +451,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/d8267aae-5c82-4885-877a-bde73ba511d3)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/How%20many%20customers%20have%20less%20than%2010%20transactions%20with%20us%2C%20excluding%20returns.png)
 
 
 
@@ -426,7 +487,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/f1efd811-72c5-4a95-bc18-35db80433380)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20combined%20revenue%20earned%20from%20the%20%E2%80%9CElectronics%E2%80%9D%20%26%20%E2%80%9CClothing%E2%80%9D%20categories%2C%20from%20%E2%80%9CFlagship%20stores.png)
 
 **Business Solution:**
 - 3851454.295 is the combined revenue earned from Electronics and Category from Flagship stores. This can be used to understand Flagship stores performance.
@@ -461,7 +522,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/26d1d5dd-18a4-4c5d-b379-d37f8035e9fa)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20the%20total%20revenue%20generated%20from%20%E2%80%9CMale%E2%80%9D%20customers%20in%20%E2%80%9CElectronics%E2%80%9D%20category%20Output%20should%20display%20total%20revenue%20by%20prod%20sub-cat.png)
 
 **Business Solution:**
 - This data displays male customer purchases in Electronics which will help to understand gender specific customer satisfaction and to get category specific data analysis.
@@ -515,7 +576,9 @@ This dataset is used for analyzing transactional data, including customer purcha
 - Number of records: 5, 5
 
 **Result:**
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/952db1fd-74f7-48be-ba51-71133b299ee3)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20percentage%20of%20sales%20and%20returns%20by%20product%20sub%20category%3B%20display%20only%20top%205%20sub%20categories%20in%20terms%20of%20sales.png)
+
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20is%20percentage%20of%20sales%20and%20returns%20by%20product%20sub%20category%3B%20display%20only%20top%205%20sub%20categories%20in%20terms%20of%20sales1.png)
 
 **Business Solution:**
 - The data provides information on sales and returns percentages within the top product categories. This help in improving overall profitability and customer satisfaction.
@@ -547,13 +610,13 @@ This dataset is used for analyzing transactional data, including customer purcha
 ```
 
 **Methods used:**
-- Limiting clause - TOP (used to limit the number of rows returned by a query)
+- Limiting clause - LIMIT (used to limit the number of rows returned by a query)
 - Grouping clause - GROUP BY (used to group rows that have the same values into summary rows)
 - Sorting clause - ORDER BY (used to sort the result set of a query based on one or more columns)
 - Functions - SUM (aggregate) (used to calculate the sum of values in a column or expression)
 - INNER JOIN (used to combine rows from two or more tables based on a related column between them)
 - Filter - WHERE (used to filter rows based on a specified condition/s)
-- Functions - DATEDIFF (used to calculate the difference between two dates)
+- Functions - DATE_PART_ (used to calculate the difference between two dates)
 - CTE (temporary table that you can reference within a query)
 
 **Schema:**
@@ -562,18 +625,20 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/d12b8585-81ff-45b9-a952-756ff2112845)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/For%20all%20customers%20aged%20between%2025%20to%2035%20years%20find%20what%20is%20the%20net%20total%20revenue%20generated%20by%20these%20consumers%20in%20last%2030%20days%20of%20transactions%20from%20max%20transaction%20date%20available%20in%20the%20data.png)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/For%20all%20customers%20aged%20between%2025%20to%2035%20years%20find%20what%20is%20the%20net%20total%20revenue%20generated%20by%20these%20consumers%20in%20last%2030%20days%20of%20transactions%20from%20max%20transaction%20date%20available%20in%20the%20data1.png)
+
 
 **Business Solution:**
 - The data gives revenue in last 30 days for customers aged 25-35. This can help in understanding purchasing behavior of the specific age group within the specified timeframe which can be used to improve customer enagagement.
 
 
 
-## 12. Which product category has seen the max value of returns in the last 3 months of transactions?
+## 12. Which product category that have highest value of returns in the last 12 months of transactions?
 
 **Query:**
 ```
-  SELECT prod.prod_cat, COUNT(trans.Qty) AS No_of_returns, ABS(SUM(trans.total_amt)) AS Return_Amount
+  SELECT prod.prod_cat, COUNT(trans.Qty) AS No_ of_returns, ABS(SUM(trans.total_amt)) AS Return_Amount
   FROM [Transactions] trans
   INNER JOIN [prod_cat_info] prod 
   ON trans.prod_cat_code = prod.prod_cat_code AND trans.prod_subcat_code = prod.prod_sub_cat_code
@@ -588,7 +653,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 - Functions - SUM (aggregate) (used to calculate the sum of values in a column or expression)
 - INNER JOIN (used to combine rows from two or more tables based on a related column between them)
 - Filter - WHERE (used to filter rows based on a specified condition/s)
-- Functions - DATEDIFF (used to calculate the difference between two dates)
+- Functions - DATE_PART (used to calculate the difference between two dates)
 - Grouping clause - GROUP BY (used to group rows that have the same values into summary rows)
 
 **Schema:**
@@ -597,7 +662,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/1bf649a4-ce3d-4f3b-a76f-90110cd8af25)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Which%20product%20category%20has%20seen%20the%20max%20value%20of%20returns%20in%20the%20last%2012%20months%20of%20transactions.png)
 
 **Business Solution:**
 - Category Home and Kitchen has the maximum (1) returns in last 3 months. Queries like this can be used to improve product quality, customer satisfaction and customer interaction.
@@ -628,7 +693,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/a43e5fa5-9d56-4380-a7cb-dff7bba8ae0a)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Which%20store-type%20sells%20the%20maximum%20products%3B%20by%20value%20of%20sales%20amount%20and%20by%20quantity%20sold.png)
 
 **Business Solution:**
 - e-Shop store sells maximum products both by quantity and sales amount. Queries like this can help with Inventory management, planning future strategies for sales etc.
@@ -662,7 +727,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/4bbd80fe-7229-4246-8ed6-eb0b4e01264c)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/What%20are%20the%20categories%20for%20which%20average%20revenue%20is%20above%20the%20overall%20average.png)
 
 **Business Solution:**
 - Categories Bags, Books, Clothing, Electronics whose average revenue (sales excluding returns) exceeds the overall average. This data can be used to plan strategies for high-performing categories which can maximize profit.
@@ -712,7 +777,7 @@ This dataset is used for analyzing transactional data, including customer purcha
 
 **Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/cdad1dfb-3ea9-40a8-82c3-5235141f6567)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Find%20the%20average%20and%20total%20revenue%20by%20each%20subcategory%20for%20the%20categories%20which%20are%20among%20top%205%20categories%20in%20terms%20of%20quantity%20sold.png)
 
 **Business Solution:**
 - This analysis can be used to compare dynamics in revenue across subcategories within the most popular product categories, which can be helpful to plan strategies and broaden the sectors.
