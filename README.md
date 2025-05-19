@@ -18,7 +18,7 @@ Retail Data Analysis is to understand customer behavior using their point of sal
 
 
 ## Tools
--Data Visualisation: Power BI
+- Data Visualisation: Power BI
 - Database Management System: PostgreSQL
 - SQL Editor: pgAdmin
 
