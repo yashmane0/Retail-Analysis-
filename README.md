@@ -25,7 +25,7 @@ Retail Data Analysis is to understand customer behavior using their point of sal
 
 
 ## Dashboard (Power BI)
-![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Count%20Trans.png)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/powerbi_dashboard.png)
 
 
 ## Dataset Description: 
