@@ -18,8 +18,14 @@ Retail Data Analysis is to understand customer behavior using their point of sal
 
 
 ## Tools
+-Data Visualisation: Power BI
 - Database Management System: PostgreSQL
 - SQL Editor: pgAdmin
+
+
+
+## Dashboard (Power BI)
+![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/Count%20Trans.png)
 
 
 ## Dataset Description: 
@@ -117,9 +123,7 @@ REFERENCES customers(customer_id);
 ```
 **Methods used:**
 - CREATE TABLE (DDL command) (used to create structure for new table)
-**Result:**
 
-![image](https://github.com/Ras-codes/E-Commerce-Retail-Data-Analysis/assets/164164852/bee1af48-0104-4b36-b0ab-f637a32532e1)
 
 ## Import data from CSV to database
 **Query:**
