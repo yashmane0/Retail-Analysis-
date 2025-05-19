@@ -27,7 +27,17 @@ Retail Data Analysis is to understand customer behavior using their point of sal
 ## Dashboard (Power BI)
 ![image](https://github.com/yashmane0/Retail-Analysis-/blob/master/outputs/powerbi_dashboard.png)
 
-
+### Power BI Measures:
+**Query:**
+```
+Total Sales = SUM(Transactions[total_amt])
+Total Quantity = SUM(Transactions[Qty])
+Total Tax = SUM(Transactions[Tax])
+Average Rate = AVERAGE(Transactions[Rate])
+Return Orders = CALCULATE(COUNTROWS(Transactions), Transactions[Qty] < 0)
+Sales with Tax = SUM(Transactions[total_amt]) + SUM(Transactions[Tax])
+Customer Age = DATEDIFF(Customers[DOB], TODAY(), YEAR)
+```
 ## Dataset Description: 
 
 ### Customers
